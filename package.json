@@ -1,5 +1,5 @@
 {
-  "name": "vanrys_t_chatapp",
+  "name": "macdonald_k_chatapp",
   "version": "1.0.0",
   "description": "social media app ",
   "main": "app.js",
@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.3.0"
   }
 }
