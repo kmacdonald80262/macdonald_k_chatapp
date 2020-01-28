@@ -22,10 +22,13 @@ const server = app.listen(port, () => {
 //attach socket.io
 io.attach(server);
 
-io.on('connecion', function(socket)) {
+io.on('connecion', function(socket) {
     console.log('user connected');
+    socket.emit('connected', {sID: `$(socket.id)`, message: 'new connection'});
 
     socket.on('diconnect', function() {
         console.log('a user disconnected');
+
+        
     })
-}
+})
