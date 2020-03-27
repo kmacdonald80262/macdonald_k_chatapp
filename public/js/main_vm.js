@@ -1,36 +1,55 @@
-// imports always go first - if we're importing anything
-import ChatMessage from "./modules/ChatMessage.js";
+import chatmessage from './modules/chats.js';
+import alertmessage from './modules/alerts.js';
+
 const socket = io();
 
-function setUserId(packet) {
-    debugger;
-    console.log(packet);
+function logConnect({socketID, message}){
+
+    console.log(socketID, message);
+    vm.socketID = socketID;
+    vm.alert = message;
 }
 
-//this is our main Vue instance
-const vm = new VTTCue({
-    data: {
-        messages: [
-            {
+function appendMessage(message){
+    vm.messages.push(message);
 
-        message: {
-            name: "TVR",
-            content: "hey wassup"
-        }
-    }
-    ]
+}
+
+function logDisconnect(response){
+
+
+        vm.alert = response.message;
+
+    console.log(response);
+}
+
+// create Vue instance
+const vm = new Vue({
+    data: {
+        socketID: "",
+        nickname: "",
+        alert: "",
+        message: "",
+        messages: []
+
+    },
+    methods: {
+        dispatchMessage(){
+            socket.emit('chat message', {content: this.message, name: this.nickname || "Anonymous"});
+            this.message = "";
+        },
+
+
     },
 
     components: {
-        newmessage: ChatMessage
-    },
 
-    mounted: function() {
-        console.log('mounted');
-    
+        newmessage: chatmessage,
+        alertmessage: alertmessage,
     }
-}).$mount("#app");
 
-//some event handling -> these events are coming from the server
-socket.addEventListener('connected', setUserId);
-socket.addEventListener('user_disconnect', runDisconnectMessage);
+}).$mount(`#app`);
+
+socket.on('connected', logConnect);
+socket.addEventListener('chat message', appendMessage);
+socket.addEventListener('disconnect', logDisconnect);
