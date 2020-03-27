@@ -1,7 +1,7 @@
 {
-  "name": "macdonald_k_chatapp",
+  "name": "macdonald-k-chatapp",
   "version": "1.0.0",
-  "description": "social media app ",
+  "description": "chat app ",
   "main": "app.js",
   "scripts": {
     "start": "node app"
@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.2.0"
   }
 }

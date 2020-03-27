@@ -1,35 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="UTF-8">
-	<title>Socket IO Chat with Node!</title>
+	<title>Chat App!</title>
 	<link rel="stylesheet" href="css/main.css">
 	<script src="https://unpkg.com/vue"></script>
-</head>
 
+</head>
 <body>
 	<main id="app">
+		
 		<section class="form-container">
-			<label for="nickname">Your Nickname (optional)</label>
-			<input type="text" id="nickname" class="nickname" placeholder="What is your nickname?">
+			<alertmessage :flash="alert"></alertmessage>
+      <label for="nickname">Chat Name</label>
+			<input v-model="nickname" type="text" id="nickname" class="nickname" placeholder="Nickname">
 
 			<form>
-				<label for="message">Something to say?</label>
-				<textarea class="message" type="text" autocomplete="off" id="textarea"></textarea>
-				<input type="submit">
+        <label for="message">Message</label>
+				<textarea v-model="message" class="message" type="text" autocomplete="off" id="textarea"></textarea>
+				<input id="submit-button" type="submit" @click.prevent="dispatchMessage">
 			</form>
-		</section>
+			
+			<section class="modes">
+					<section onclick="changeNight()" class="mode-buttons">
+						<h2>Night Mode</h2>
+					</section>
+					<section onclick="changeDay()" class="mode-buttons">
+						<h2>Day Mode</h2>
+					</section>
+					</section>
+	
+	</section>
 
 		<section class="messages">
 			<ul id="messages" v-for="message in messages">
-				<!-- render a new message component for every message -->
-				<newmessage :msg="message"></newmessage>
+        <newmessage :msg="message"></newmessage>
 			</ul>
 		</section>
+		
 	</main>
-	<!-- <script src="/socket.io/socket.io.js"></script> -->
+	<script src="/socket.io/socket.io.js"></script>
 	<script type="module" src="js/main_vm.js"></script>
-</body>
+	<script  src="js/modes.js"></script>
 
+</body>
 </html>
